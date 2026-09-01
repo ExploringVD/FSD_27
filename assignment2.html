@@ -76,6 +76,22 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .ticket-card {
+            background-color: white;
+            border: 2px dashed black;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .ticket-card h2 {
+            color: green;
+        }
+
+        .ticket-card p {
+            margin: 8px 0;
+        }
     </style>
 </head>
 <body>
@@ -150,9 +166,59 @@
             </select>
         </div>
 
-        <button class="book-btn">Book Now</button>
+        <button class="book-btn" id="bookBtn">Book Now</button>
+
+        <div class="ticket-card" id="ticketCard" style="display:none;">
+            <h2>Ticket Booked Successfully</h2>
+            <p><strong>Passenger:</strong> <span id="tName"></span></p>
+            <p><strong>Age:</strong> <span id="tAge"></span></p>
+            <p><strong>Aadhaar Number:</strong> <span id="tAadhar"></span></p>
+            <p><strong>City:</strong> <span id="tCity"></span></p>
+            <p><strong>Destination:</strong> <span id="tDestination"></span></p>
+            <p><strong>Travel Date:</strong> <span id="tDate"></span></p>
+            <p><strong>Bus Type:</strong> <span id="tBusType"></span></p>
+            <p><strong>Seat Number:</strong> <span id="tSeat"></span></p>
+            <p><strong>Fare:</strong> Rs. <span id="tFare"></span></p>
+        </div>
 
     </div>
+
+    <script>
+        document.getElementById("bookBtn").addEventListener("click", function () {
+
+            const name = document.getElementById("uname").value.trim();
+            const age = document.getElementById("uage").value.trim();
+            const aadhar = document.getElementById("aadhar").value.trim();
+            const city = document.getElementById("city").value;
+            const date = document.getElementById("date").value;
+            const destination = document.getElementById("destination").value;
+            const seat = document.getElementById("seat").value;
+
+            const busTypeInput = document.querySelector('input[name="busType"]:checked');
+
+            // check if any field is empty
+            if (name === "" || age === "" || aadhar === "" || date === "" || !busTypeInput) {
+                alert("Please fill all the necessary details first!");
+                return;
+            }
+
+            const busPrice = Number(busTypeInput.value);
+            const busTypeName = busTypeInput.id === "acBus" ? "AC Bus" : "Non-AC Bus";
+            const fare = busPrice * Number(seat);
+
+            document.getElementById("tName").textContent = name;
+            document.getElementById("tAge").textContent = age;
+            document.getElementById("tAadhar").textContent = aadhar;
+            document.getElementById("tCity").textContent = city;
+            document.getElementById("tDestination").textContent = destination;
+            document.getElementById("tDate").textContent = date;
+            document.getElementById("tBusType").textContent = busTypeName;
+            document.getElementById("tSeat").textContent = seat;
+            document.getElementById("tFare").textContent = fare;
+
+            document.getElementById("ticketCard").style.display = "block";
+        });
+    </script>
 
 </body>
 </html>
